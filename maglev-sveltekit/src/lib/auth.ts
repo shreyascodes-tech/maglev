@@ -1,6 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import { createGraphqlClient } from './gql';
-import { ClientError, gql } from 'graphql-request';
+import { ClientError } from 'graphql-request';
+import { graphql as gql } from '../gql';
 
 type Event = RequestEvent<Partial<Record<string, string>>, string | null>;
 
@@ -9,15 +10,15 @@ export async function checkAuth({ cookies, locals }: Event) {
 	const client = createGraphqlClient(token);
 
 	try {
-		await client.request<{
-			me: { id: string };
-		}>(gql`
-			query {
-				me {
-					id
+		await client.request(
+			gql(`
+				query getUser {
+					me {
+						id
+					}
 				}
-			}
-		`);
+			`)
+		);
 
 		locals.client = client;
 	} catch (error) {
