@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as types from './graphql';
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import * as types from './graphql.js';
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,7 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n\t\t\t\tquery getUser {\n\t\t\t\t\tme {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t": types.GetUserDocument,
+	'\n\t\t\t\tquery getUser {\n\t\t\t\t\tme {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t':
+		types.GetUserDocument,
 };
 
 /**
@@ -33,10 +34,13 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\t\t\t\tquery getUser {\n\t\t\t\t\tme {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t"): (typeof documents)["\n\t\t\t\tquery getUser {\n\t\t\t\t\tme {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t"];
+export function graphql(
+	source: '\n\t\t\t\tquery getUser {\n\t\t\t\t\tme {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t'
+): (typeof documents)['\n\t\t\t\tquery getUser {\n\t\t\t\t\tme {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t'];
 
 export function graphql(source: string) {
-  return (documents as any)[source] ?? {};
+	return (documents as any)[source] ?? {};
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
+	TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;
